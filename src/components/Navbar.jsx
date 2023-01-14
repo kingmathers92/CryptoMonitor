@@ -1,14 +1,27 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { UserAuth } from "../context/AuthContext";
 
 function Navbar() {
   const [nav, setNav] = useState(false);
+  const { user, logout } = UserAuth();
+  const navigate = useNavigate();
 
   const handleNav = () => {
     setNav(!nav);
   };
+
+  const handleSignOut = async () => {
+    try {
+      await logout();
+      navigate("/");
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   return (
     <div className="rounded-div flex items-center justify-between h-20 font-bold">
       <Link to="/">
@@ -17,17 +30,28 @@ function Navbar() {
       <div className="hidden md:block">
         <ThemeToggle />
       </div>
-      <div className="hidden md:block">
-        <Link to="/login" className="p-4 hover:text-accent">
-          Log In
-        </Link>
-        <Link
-          to="/signup"
-          className="bg-button text-btnText px-5 py-2 ml-2 rounded-2xl shadow-lg hover:shadow-2xl"
-        >
-          Sign Up
-        </Link>
-      </div>
+
+      {user?.email ? (
+        <div>
+          <Link to="/account">Account</Link>
+          <button className="p-4 cursor-pointer" onClick={handleSignOut}>
+            Logout
+          </button>
+        </div>
+      ) : (
+        <div className="hidden md:block">
+          <Link to="/login" className="p-4 hover:text-accent">
+            Log In
+          </Link>
+          <Link
+            to="/signup"
+            className="bg-button text-btnText px-5 py-2 ml-2 rounded-2xl shadow-lg hover:shadow-2xl"
+          >
+            Sign Up
+          </Link>
+        </div>
+      )}
+
       {/* Menu Icon*/}
       <div onClick={handleNav} className="block md:hidden cursor-pointer z-10">
         {nav ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
@@ -41,11 +65,11 @@ function Navbar() {
         }
       >
         <ul className="w-full p-4">
-          <li className="border-b py-6">
+          <li onClick={handleNav} className="border-b py-6">
             <Link to="/">Home</Link>
           </li>
-          <li className="border-b py-6">
-            <Link to="/">Account</Link>
+          <li onClick={handleNav} className="border-b py-6">
+            <Link to="/account">Account</Link>
           </li>
           <li className="py-6">
             <ThemeToggle />
@@ -53,12 +77,18 @@ function Navbar() {
         </ul>
         <div className="flex flex-col w-full p-8">
           <Link to="/login">
-            <button className="w-full my-2 p-3 bg-primary text-primary border border-secondary rounded-2xl shadow-xl">
+            <button
+              onClick={handleNav}
+              className="w-full my-2 p-3 bg-primary text-primary border border-secondary rounded-2xl shadow-xl"
+            >
               Login
             </button>
           </Link>
           <Link to="/signup">
-            <button className="w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl">
+            <button
+              onClick={handleNav}
+              className="w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl"
+            >
               Sign Up
             </button>
           </Link>
