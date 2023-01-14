@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Todos:
+
+1- Adding show and hide password in account panel.
+2- Adding the scroll-to-top every time page change and fixed the search crypto search bar until the bottom of 10th coin.
+3- Add forget password bot ,so that user can recover there password if it forget.
+4-Adding loading screen everytime pages render & pagination upto 25 pages.
+5- Making a new page for trending coins too..
+
+6)When a user is logged in and opens the hamburger menu(nav menu on smaller screens). It still gives the options of the user signing up/sign in. Update this so that it only displays Home, Account and Logout options if a user is logged in.
+
+7)This is still in regards to the mobile view (smaller screens). Its a bit repetitive to have the account /signout options in the main nav bar if those options are available after pressing the hamburger icon. once again this is only for mobile screen sizes. I completely removed it on only let it appear if you press the hamburger menu icon. I left it as is for the larger screen.

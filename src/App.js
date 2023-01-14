@@ -3,10 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { ThemeProvider } from "./context/ThemeContext";
 import Home from "./routes/Home";
-import Login from "./routes/Home";
-import Signup from "./routes/Home";
-import Account from "./routes/Home";
+import Login from "./routes/Login";
+import Signup from "./routes/Signup";
+import Account from "./routes/Account";
+import CoinPage from "./routes/CoinPage";
+import Footer from "./components/Footer";
 import axios from "axios";
+import { AuthContextProvider } from "./context/AuthContext";
 
 function App() {
   const [coins, setCoins] = useState([]);
@@ -23,13 +26,19 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home coins={coins} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/account" element={<Account />} />
-      </Routes>
+      <AuthContextProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home coins={coins} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/coin/:coinId" element={<CoinPage />}>
+            <Route path=":coinId" />
+          </Route>
+        </Routes>
+        <Footer />
+      </AuthContextProvider>
     </ThemeProvider>
   );
 }
