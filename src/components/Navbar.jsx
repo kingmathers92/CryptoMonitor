@@ -23,7 +23,7 @@ function Navbar() {
   };
 
   return (
-    <div className="rounded-div flex items-center justify-between h-20 font-bold">
+    <div className="rounded-div flex items-center mt-2 justify-between h-20 font-bold">
       <Link to="/">
         <h1 className="text-2xl cursor-pointer">Crypto Monitor</h1>
       </Link>
