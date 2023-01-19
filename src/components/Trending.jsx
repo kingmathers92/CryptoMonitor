@@ -9,12 +9,12 @@ const Trending = () => {
   useEffect(() => {
     axios.get(url).then((res) => {
       setTrending(res.data.coins);
-      console.log(res.data.coins);
+      //   console.log(res.data.coins)
     });
   }, []);
 
   return (
-    <div className="rounded-div my-12 py-8 text-primary">
+    <div className="rounded-div my-12 py-2 text-primary">
       <h1 className="text-2xl font-bold py-4">Trending Coins</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {trending.map((coin, idx) => (

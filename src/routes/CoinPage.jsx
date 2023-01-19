@@ -12,9 +12,9 @@ const CoinPage = () => {
   const url = `https://api.coingecko.com/api/v3/coins/${params.coinId}?localization=false&sparkline=true`;
 
   useEffect(() => {
-    axios.get(url).then((response) => {
-      setCoin(response.data);
-      //console.log(response.data);
+    axios.get(url).then((res) => {
+      setCoin(res.data);
+      //console.log(res.data);
     });
   }, [url]);
 

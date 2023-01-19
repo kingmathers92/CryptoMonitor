@@ -3,6 +3,7 @@ import CoinItem from "./CoinItem";
 
 const CoinSearch = ({ coins }) => {
   const [searchText, setSearchText] = useState("");
+
   return (
     <div className="rounded-div my-4">
       <div className="flex flex-col md:flex-row justify-between pt-4 pb-6 text-center md:text-right">
