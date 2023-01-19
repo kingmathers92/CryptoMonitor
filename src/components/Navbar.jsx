@@ -32,7 +32,7 @@ function Navbar() {
       </div>
 
       {user?.email ? (
-        <div>
+        <div className="hidden md:block">
           <Link to="/account">Account</Link>
           <button className="p-4 cursor-pointer" onClick={handleSignOut}>
             Logout
@@ -75,24 +75,37 @@ function Navbar() {
             <ThemeToggle />
           </li>
         </ul>
-        <div className="flex flex-col w-full p-8">
-          <Link to="/login">
-            <button
-              onClick={handleNav}
-              className="w-full my-2 p-3 bg-primary text-primary border border-secondary rounded-2xl shadow-xl"
-            >
-              Login
-            </button>
+        {!user?.email ? (
+          <div className="flex flex-col w-full p-8">
+            <Link to="/login">
+              <button
+                onClick={handleNav}
+                className="w-full my-2 p-3 bg-primary text-primary border border-secondary rounded-2xl shadow-xl"
+              >
+                Login
+              </button>
+            </Link>
+            <Link to="/signup">
+              <button
+                onClick={handleNav}
+                className="w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl"
+              >
+                Sign Up
+              </button>
+            </Link>
+          </div>
+        ) : (
+          <Link to="/logout">
+            <div className="flex flex-col w-full p-8">
+              <button
+                onClick={handleSignOut}
+                className="w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl"
+              >
+                Logout
+              </button>
+            </div>
           </Link>
-          <Link to="/signup">
-            <button
-              onClick={handleNav}
-              className="w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl"
-            >
-              Sign Up
-            </button>
-          </Link>
-        </div>
+        )}
       </div>
     </div>
   );
