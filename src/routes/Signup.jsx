@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { AiFillLock, AiOutlineMail } from "react-icons/ai";
+import {
+  AiFillLock,
+  AiOutlineMail,
+  AiFillEyeInvisible,
+  AiFillEye,
+} from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import Error from "../components/Error";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +15,13 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const { signUp } = UserAuth();
+  const { signUp, checkEmailExists } = UserAuth();
+
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+  const isValidEmail = (email) => {
+    return emailRegex.test(email);
+  };
 
   const toggle = () => {
     setOpen(!open);
@@ -19,12 +30,27 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    if (!isValidEmail(email)) {
+      setError("Invalid email address");
+      return;
+    }
+    if (password.length === 0) {
+      setError("Password is empty.");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      return;
+    }
     try {
       await signUp(email, password);
       navigate("/account");
     } catch (e) {
       setError(e.message);
-      console.log(e.message);
+      const emailExists = await checkEmailExists(email);
+      if (emailExists) {
+        setError("This email is already registered.");
+      }
     }
   };
 
@@ -32,7 +58,7 @@ const Signup = () => {
     <div>
       <div className="max-w-[400px] mx-auto min-h-[600px] px-4 py-20">
         <h1 className="text-2xl font-bold">Sign Up</h1>
-        {error ? <p className="bg-red-500 p-3 my-2">{error}</p> : null}
+        {error ? <Error error={error} setError={setError} /> : null}
         <form onSubmit={handleSubmit}>
           <div className="my-4">
             <label>Email</label>

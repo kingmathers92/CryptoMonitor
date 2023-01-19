@@ -13,6 +13,11 @@ const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+  const isValidEmail = (email) => {
+    return emailRegex.test(email);
+  };
 
   const signUp = (email, password) => {
     createUserWithEmailAndPassword(auth, email, password);
@@ -23,6 +28,14 @@ export const AuthContextProvider = ({ children }) => {
 
   const logIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const checkEmailExists = async (email) => {
+    if (!isValidEmail(email)) {
+      return false;
+    }
+    const signInMethods = await auth.fetchSignInMethodsForEmail(email);
+    return signInMethods.length > 0;
   };
 
   const logout = () => {
@@ -39,7 +52,9 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ signUp, logIn, logout, user }}>
+    <UserContext.Provider
+      value={{ signUp, logIn, checkEmailExists, logout, user }}
+    >
       {children}
     </UserContext.Provider>
   );
