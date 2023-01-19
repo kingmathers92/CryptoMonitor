@@ -8,6 +8,7 @@ import Signup from "./routes/Signup";
 import Account from "./routes/Account";
 import CoinPage from "./routes/CoinPage";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 import axios from "axios";
 import { AuthContextProvider } from "./context/AuthContext";
 
@@ -40,6 +41,7 @@ function App() {
               <Route path=":coinId" />
             </Route>
           </Routes>
+          <ScrollToTop />
           <Footer />
         </Suspense>
       </AuthContextProvider>
