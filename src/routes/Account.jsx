@@ -6,6 +6,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 const Account = () => {
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
+  let username = user?.email.substring(0, user?.email.indexOf("@"));
+  //console.log(username);
 
   const handleSignOut = async () => {
     try {
@@ -23,7 +25,7 @@ const Account = () => {
           <div>
             <h1 className="text-2xl font-bold">Account</h1>
             <div>
-              <p>Welcome, {user?.email}</p>
+              <p>Welcome, {username}</p>
             </div>
           </div>
           <div>
