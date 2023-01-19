@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import { AiFillLock, AiOutlineMail } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { signUp } = UserAuth();
+
+  const toggle = () => {
+    setOpen(!open);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,9 +51,19 @@ const Signup = () => {
               <input
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full p-2 bg-primary border border-input rounded-2xl"
-                type="password"
+                type={open === false ? "password" : "text"}
               />
               <AiFillLock className="absolute right-2 top-3 text-gray-400" />
+              <div
+                title={open === false ? "Show Password" : "Hide Password"}
+                className="text-xl absolute top-2.5 right-7 text-gray-400 cursor-pointer"
+              >
+                {open === false ? (
+                  <AiFillEye onClick={toggle} />
+                ) : (
+                  <AiFillEyeInvisible onClick={toggle} />
+                )}
+              </div>
             </div>
           </div>
           <button className="w-full my-2 p-3 bg-button cursor-pointer text-btnText rounded-2xl shadow-xl">
