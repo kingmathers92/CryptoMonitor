@@ -1,11 +1,10 @@
 import React from "react";
 import SavedCoin from "../components/SavedCoin";
 import { UserAuth } from "../context/AuthContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const Account = () => {
-  const { user, logout } = UserAuth();
-  const navigate = useNavigate();
+  const { user } = UserAuth();
   let username = user?.email.substring(0, user?.email.indexOf("@"));
   //console.log(username);
 
